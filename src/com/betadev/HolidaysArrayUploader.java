@@ -36,7 +36,7 @@ public class HolidaysArrayUploader {
                 reader.close();
             }
         }
-        System.out.println("Anbima holidays successfully imported");
+        //System.out.println("Anbima holidays successfully imported");
         return content;
     }
 }
