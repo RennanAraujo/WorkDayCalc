@@ -11,7 +11,8 @@
  * v0.0.8 - iniciado o versionamento via GitHub
  * v0.0.9 - retirados comentários desnecessários
  * v0.0.10 - retirado parâmetro de feriados dos métodos isHoliday e findIndex
- * todo: ainda não está reconhecendo os finais de semana
+ * v0.0.11 - retirado importação de arquivo dos métodos isHoliday e findIndex
+ * todo1: ainda não está reconhecendo os finais de semana
  */
 package com.betadev;
 
@@ -20,15 +21,17 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
 import java.io.IOException;
 import java.util.Scanner;
-//import java.lang.*;
-
 
 public class WorkDayCalc {
         public static DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/uuuu").withResolverStyle(ResolverStyle.STRICT); //static to get accessed
-        public boolean isHoliday(LocalDate localDateInput) throws IOException {
-            String fileName = "C:\\Code\\MiscJ\\WorkDayCalc\\resources\\AnbimaDatesOnly.txt";
-            HolidaysArrayUploader holidayArrayUploader = new HolidaysArrayUploader();
-            LocalDate[] holidayListInput = holidayArrayUploader.importHolidays(fileName);
+        public String fileName = "C:\\Code\\MiscJ\\WorkDayCalc\\resources\\AnbimaDatesOnly.txt";
+        public HolidaysArrayUploader holidayArrayUploader = new HolidaysArrayUploader();
+        public LocalDate[] holidayListInput = holidayArrayUploader.importHolidays(fileName);
+
+    public WorkDayCalc() throws IOException {
+    }
+
+    public boolean isHoliday(LocalDate localDateInput) throws IOException {
             boolean result = false;
             for (int i = 0; i < holidayListInput.length; i++) {
                 if(holidayListInput[i].equals(localDateInput)) { //yyyy-mm-dd
@@ -36,30 +39,27 @@ public class WorkDayCalc {
                     break;
                 }
             }
-            return result; //boa prática: somente 1 retorno
+            return result;
         }
         public int findIndex(LocalDate localDateInput) throws IOException {
-            String fileName = "C:\\Code\\MiscJ\\WorkDayCalc\\resources\\AnbimaDatesOnly.txt";
-            HolidaysArrayUploader holidayArrayUploader = new HolidaysArrayUploader();
-            LocalDate[] holidayListInput = holidayArrayUploader.importHolidays(fileName);
             int position = -1;
-            for (int i = 0; i < holidayListInput.length; i++) {
-                if(holidayListInput[i].equals(localDateInput)) {
-                    position = i;
+            for (int j = 0; j < holidayListInput.length; j++) {
+                if(holidayListInput[j].equals(localDateInput)) {
+                    position = j;
                     break;
                 }
             }
             return position;
         }
-        public static void main(String[] args) throws IOException { //o main é para a execução, não há regras de negócio aqui
-            WorkDayCalc workDayCalc = new WorkDayCalc(); //declarando a variável para acessar o método não-estático isHoliday
+        public static void main(String[] args) throws IOException {
+            WorkDayCalc workDayCalc = new WorkDayCalc();
             Scanner sc = new Scanner(System.in);
             System.out.println("=====THIS APP CHECKS IF A DATE IS HOLIDAY=====");
             System.out.print("Enter a date to test (use dd/MM/yyyy): ");
             LocalDate localDateToTest = LocalDate.parse(sc.nextLine(), fmt);
             boolean check = workDayCalc.isHoliday(localDateToTest);
             int index = workDayCalc.findIndex(localDateToTest);
-            System.out.println("Is a this date a holiday? " + check);
+            System.out.println("Is this date a holiday? " + check);
             System.out.println("Position in holiday array (-1 if not found): " + index);
         }
     }
