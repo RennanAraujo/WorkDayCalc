@@ -13,7 +13,8 @@
  * v0.0.10 - retirado parâmetro de feriados dos métodos isHoliday e findIndex
  * v0.0.11 - retirado importação de arquivo dos métodos isHoliday e findIndex
  * v0.1.0 - criada classe Main para executar o programa
- * todo1: ainda não está reconhecendo os finais de semana
+ * v0.1.1 - incluidos métodos isWeekend, holidaysBetween and daysBetween
+ * todo1: finalizar switch case e consertar bug da diff em DU (1 ou 2)
  */
 package com.betadev;
 
@@ -21,8 +22,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
 import java.io.IOException;
@@ -71,7 +70,7 @@ public class WorkDayCalc {
 			}
 			i++;
 		}
-		return i - j + 2;
+		return i - j + 2; //diff varia entre 1 e 2 dias
 	}
 
 	public int daysBetween(LocalDate startDate, LocalDate endDate) {
