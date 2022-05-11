@@ -62,8 +62,8 @@ public class WorkDayCalc {
 	}
 
 	public int holidaysBetween(LocalDate startDate, LocalDate endDate) throws IOException {
-		int i = 1;
-		int j = 1;
+		int i = 0;
+		int j = 0;
 		while (startDate.plusDays(i).isBefore(endDate)) {
 			if ((isHoliday(startDate.plusDays(i))) || (isWeekend(startDate.plusDays(i)))) {
 				j++;
