@@ -16,8 +16,7 @@ public class Main {
 		int choose = sc.nextInt();
 		sc.nextLine(); //read the '\n'
 		switch (choose) {
-			case 1:
-			{
+			case 1: {
 				System.out.print("Enter a date to test: ");
 				String input = sc.nextLine();
 				LocalDate dateToTest = LocalDate.parse(input, fmt);
@@ -39,24 +38,14 @@ public class Main {
 				startDate = LocalDate.parse(sc.nextLine(), fmt);
 				System.out.print("Enter end date: ");
 				endDate = LocalDate.parse(sc.nextLine(), fmt);
-				System.out.println("Elapsed time in working days: "
-						+ workDayCalc.holidaysBetween(startDate, endDate));
+				if (endDate.isAfter(startDate)) {
+					System.out.println("Elapsed time in working days: "
+							+ workDayCalc.holidaysBetween(startDate, endDate));
+				} else {
+					System.out.println("End date is before start date"); //essa regra deveria estar aqui ou no método?
+				}
 				break;
 		}
 		sc.close();
-
-
-		/*
-		boolean checkWE = workDayCalc.isWeekend(dateToTest);
-		*/
-		//int index = workDayCalc.findIndex(dateToTest);
-		/*
-		 System.out.println("Is this date in a weekend? " + checkWE);
-		*/
-
-		//System.out.println("xxx: " + workDayCalc.workDaysBetween(startDate, endDate));
-		//System.out.println("Elapsed time in days: " + workDayCalc.daysBetween(startDate, endDate));
-
-		//System.out.println("Position in holiday array (-1 if not found): " + index);
 	}
 }
