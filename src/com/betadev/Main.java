@@ -55,27 +55,27 @@ public class Main {
 				startDate = LocalDate.parse(sc.nextLine(), fmt);
 				System.out.print("Enter end date: ");
 				endDate = LocalDate.parse(sc.nextLine(), fmt);
-				LocalDate[] arr = workDayCalc.nonWorkingDaysBetweenShort(startDate, endDate);
-				LocalDate[] arrFull = workDayCalc.nonWorkingDaysBetween(startDate, endDate);
-				System.out.println("Short " + arr.length + "\nFull " + arrFull.length);
+				LocalDate[] arr = workDayCalc.nonWorkingDaysBetween(startDate, endDate);
+				//LocalDate[] arrFull = workDayCalc.nonWorkingDaysBetween(startDate, endDate);
+				//System.out.println("Short " + arr.length + "\nFull " + arrFull.length);
 				System.out.println(Arrays.toString(arr));
-				System.out.println(Arrays.toString(arrFull));
+				//System.out.println(Arrays.toString(arrFull));
 				break;
 			case 5:
 				System.out.print("Enter date: ");
 				startDate = LocalDate.parse(sc.nextLine(), fmt);
 				System.out.print("Enter end date: ");
 				endDate = LocalDate.parse(sc.nextLine(), fmt);
-				int result = workDayCalc.numberOfNonWorkingDaysBetween(startDate, endDate);
-				System.out.println("Number of non working days between: " + result);
+				int result5 = workDayCalc.numberOfNonWorkingDaysBetween(startDate, endDate);
+				System.out.println("Number of non working days between: " + result5);
 				break;
 			case 6:
 				System.out.print("Enter date: ");
 				startDate = LocalDate.parse(sc.nextLine(), fmt);
 				System.out.print("Enter end date: ");
 				endDate = LocalDate.parse(sc.nextLine(), fmt);
-				result = workDayCalc.workingDaysBetween(startDate, endDate);
-				System.out.println("Number of working days between: " + result);
+				int result6 = workDayCalc.workingDaysBetween(startDate, endDate);
+				System.out.println("Number of working days between: " + result6);
 		}
 		sc.close();
 	}

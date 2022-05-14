@@ -18,7 +18,8 @@
  * v0.1.3 - Add método holidaysBetween
  * v0.1.4 - Refactor of constructor WorkDayCalc and add of numberOfNonWorkingDaysBetween and nonWorkingDaysBetweenShort methods
  * v0.1.5 - Add method workingDaysBetween
- * todo1: como implementar testes?
+ * v0.1.4 - Remove method nonWorkingDaysBetweenShort
+ * todo1: como implementar testes? ver framework JUnit
  */
 package com.betadev;
 
@@ -95,29 +96,22 @@ public class WorkDayCalc {
 	public LocalDate[] nonWorkingDaysBetween(LocalDate startDate, LocalDate endDate) {
 		int j;
 		long len = numberOfDaysBetween(startDate, endDate);
-		LocalDate[] arr = new LocalDate[(int) len];
+		//LocalDate[] arr = new LocalDate[(int) len];
+		LocalDate[] arr = new LocalDate[0];
 		for (j = 0; j <= len; j++) { //<= pra incluir o último dia
 			if (isHoliday(startDate.plusDays(j)) || isWeekend(startDate.plusDays(j))) {
-				arr = addDate(arr, startDate.plusDays(j));
+				arr = addDate(arr, startDate.plusDays(j)); //tá add os elementos ao
 				//System.out.println("adding to list: " + startDate.plusDays(j));
 			}
 		}
 		return arr;
 	}
 
-	public int numberOfNonWorkingDaysBetween(LocalDate startDate, LocalDate endDate) {
-		int j;
-		int count = 0;
-		int len = nonWorkingDaysBetween(startDate, endDate).length;
-		for (j = 0; j <= len; j++) { //<= pra incluir o último dia
-			if (isHoliday(startDate.plusDays(j)) || isWeekend(startDate.plusDays(j))) {
-				count++;
-			}
-		}
-		return count;
+	public int numberOfNonWorkingDaysBetween(LocalDate startDate, LocalDate endDate){
+		return nonWorkingDaysBetween(startDate, endDate).length;
 	}
 
-	public LocalDate[] nonWorkingDaysBetweenShort(LocalDate startDate, LocalDate endDate) {
+/*	public LocalDate[] nonWorkingDaysBetweenShort(LocalDate startDate, LocalDate endDate) {
 		LocalDate[] arr = nonWorkingDaysBetween(startDate, endDate);
 		int shortLen = numberOfNonWorkingDaysBetween(startDate, endDate);
 		LocalDate[] shortArr = new LocalDate[shortLen];
@@ -128,12 +122,12 @@ public class WorkDayCalc {
 			}
 		}
 		return shortArr;
-	}
+	}*/
 
 	public int workingDaysBetween(LocalDate startDate, LocalDate endDate){
-		System.out.println(numberOfDaysBetween(startDate, endDate));
-		System.out.println(numberOfNonWorkingDaysBetween(startDate, endDate));
-		return (int) (numberOfDaysBetween(startDate, endDate) - numberOfNonWorkingDaysBetween(startDate, endDate));
+		//System.out.println("DC: " + numberOfDaysBetween(startDate, endDate));
+		//System.out.println("NWD: " + numberOfNonWorkingDaysBetween(startDate, endDate));
+		return (int) (numberOfDaysBetween(startDate, endDate) - numberOfNonWorkingDaysBetween(startDate, endDate)+1);
 	}
 }
 
