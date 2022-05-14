@@ -56,10 +56,7 @@ public class Main {
 				System.out.print("Enter end date: ");
 				endDate = LocalDate.parse(sc.nextLine(), fmt);
 				LocalDate[] arr = workDayCalc.nonWorkingDaysBetween(startDate, endDate);
-				//LocalDate[] arrFull = workDayCalc.nonWorkingDaysBetween(startDate, endDate);
-				//System.out.println("Short " + arr.length + "\nFull " + arrFull.length);
 				System.out.println(Arrays.toString(arr));
-				//System.out.println(Arrays.toString(arrFull));
 				break;
 			case 5:
 				System.out.print("Enter date: ");

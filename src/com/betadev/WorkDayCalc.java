@@ -18,8 +18,9 @@
  * v0.1.3 - Add método holidaysBetween
  * v0.1.4 - Refactor of constructor WorkDayCalc and add of numberOfNonWorkingDaysBetween and nonWorkingDaysBetweenShort methods
  * v0.1.5 - Add method workingDaysBetween
- * v0.1.4 - Remove method nonWorkingDaysBetweenShort
- * todo1: como implementar testes? ver framework JUnit
+ * v0.1.4 - Remove method nonWorkingDaysBetweenShort and refactor numberOfNonWorkingDaysBetween
+ * v0.1.5 - Refactor in workingDaysBetween to match results of NETWORKDAYS from MS Excel
+ * todo1: como implementar testes? ver framework JUnit | fórmula bate com NETWORKDAYS
  */
 package com.betadev;
 
@@ -111,23 +112,8 @@ public class WorkDayCalc {
 		return nonWorkingDaysBetween(startDate, endDate).length;
 	}
 
-/*	public LocalDate[] nonWorkingDaysBetweenShort(LocalDate startDate, LocalDate endDate) {
-		LocalDate[] arr = nonWorkingDaysBetween(startDate, endDate);
-		int shortLen = numberOfNonWorkingDaysBetween(startDate, endDate);
-		LocalDate[] shortArr = new LocalDate[shortLen];
-		int i;
-		for (i = 0; i < arr.length; i++) {
-			if (arr[i] != null) {
-				shortArr = addDate(shortArr, arr[i]);
-			}
-		}
-		return shortArr;
-	}*/
-
 	public int workingDaysBetween(LocalDate startDate, LocalDate endDate){
-		//System.out.println("DC: " + numberOfDaysBetween(startDate, endDate));
-		//System.out.println("NWD: " + numberOfNonWorkingDaysBetween(startDate, endDate));
-		return (int) (numberOfDaysBetween(startDate, endDate) - numberOfNonWorkingDaysBetween(startDate, endDate)+1);
+		return (int) (numberOfDaysBetween(startDate, endDate) - numberOfNonWorkingDaysBetween(startDate, endDate)+1); //data inicial e final inclusive
 	}
 }
 
