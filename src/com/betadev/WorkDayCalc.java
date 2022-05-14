@@ -17,7 +17,8 @@
  * v0.1.2 - switch case
  * v0.1.3 - Add método holidaysBetween
  * v0.1.4 - Refactor of constructor WorkDayCalc and add of numberOfNonWorkingDaysBetween and nonWorkingDaysBetweenShort methods
- * todo1: finalizar switch case e consertar bug da diff em DU (1 ou 2)
+ * v0.1.5 - Add method workingDaysBetween
+ * todo1: como implementar testes?
  */
 package com.betadev;
 
@@ -35,11 +36,14 @@ public class WorkDayCalc {
 	public final String FILENAME = "C:\\Code\\MiscJ\\WorkDayCalc\\resources\\AnbimaDatesOnly.txt";
 	public LocalDate[] holidayList = null;
 
-	public WorkDayCalc() throws IOException { //Constructor padrão não lança exceção
-		//verificar try catch para erro
-		//não fazer chamada potencialmente perigosa fora daqui e sim dentro de um método factory ou um construtor
-		HolidaysArrayUploader holidayArrayUploader = new HolidaysArrayUploader();
-		holidayList = holidayArrayUploader.importHolidays(FILENAME);//inicialização
+	public WorkDayCalc() { //Add o try catch e não precisa mais Throw IOException
+		try {
+			//Chamada potencialmente perigosa: precisa ser feita dentro de um método factory ou um construtor
+			HolidaysArrayUploader holidayArrayUploader = new HolidaysArrayUploader();
+			holidayList = holidayArrayUploader.importHolidays(FILENAME);//inicialização
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public boolean isHoliday(LocalDate localDateInput) {
@@ -73,8 +77,8 @@ public class WorkDayCalc {
 
 	}
 
-	public long daysBetween(LocalDate startDate, LocalDate endDate) {
-		return ChronoUnit.DAYS.between(startDate, endDate);
+	public long numberOfDaysBetween(LocalDate startDate, LocalDate endDate) {
+		return ChronoUnit.DAYS.between(startDate, endDate); //fazer cast para inteiro onde for usar
 	}
 
 	public LocalDate[] addDate(LocalDate[] arr, LocalDate x) {
@@ -83,33 +87,21 @@ public class WorkDayCalc {
 		// Add the new element
 		if (x != null) {
 			arrayList.add(x);
-			//arrayList.removeAll(Collections.singletonList(null));
-			//removeNullUsingIterator(arrayList);
-			//https://acervolima.com/programa-java-para-remover-nulos-de-um-conteiner-de-lista/
 		}
-		while (arrayList.remove(null)) {
-		}
-		// Convert the Arraylist to array
 		arr = arrayList.toArray(arr);
 		return arr;
 	}
-	//public LocalDate onlyDates (LocalDate[] arr, LocalDate startDate, LocalDate endDate){
-		//int shortLen = nonWorkingDaysBetween(startDate, endDate).n;
-	//}
+
 	public LocalDate[] nonWorkingDaysBetween(LocalDate startDate, LocalDate endDate) {
 		int j;
-		int n;
-		long len = daysBetween(startDate, endDate);
+		long len = numberOfDaysBetween(startDate, endDate);
 		LocalDate[] arr = new LocalDate[(int) len];
-		//LocalDate[] arr = new LocalDate[0];
 		for (j = 0; j <= len; j++) { //<= pra incluir o último dia
 			if (isHoliday(startDate.plusDays(j)) || isWeekend(startDate.plusDays(j))) {
 				arr = addDate(arr, startDate.plusDays(j));
 				//System.out.println("adding to list: " + startDate.plusDays(j));
 			}
 		}
-		n = j;
-		//arr = LocalDate.parse(arr, fmt);
 		return arr;
 	}
 
@@ -124,17 +116,24 @@ public class WorkDayCalc {
 		}
 		return count;
 	}
-	public LocalDate[] nonWorkingDaysBetweenShort(LocalDate startDate, LocalDate endDate){
+
+	public LocalDate[] nonWorkingDaysBetweenShort(LocalDate startDate, LocalDate endDate) {
 		LocalDate[] arr = nonWorkingDaysBetween(startDate, endDate);
 		int shortLen = numberOfNonWorkingDaysBetween(startDate, endDate);
 		LocalDate[] shortArr = new LocalDate[shortLen];
 		int i;
-		for(i=0; i< arr.length; i++){
-			if(arr[i] != null){
+		for (i = 0; i < arr.length; i++) {
+			if (arr[i] != null) {
 				shortArr = addDate(shortArr, arr[i]);
 			}
 		}
-	return shortArr;
+		return shortArr;
+	}
+
+	public int workingDaysBetween(LocalDate startDate, LocalDate endDate){
+		System.out.println(numberOfDaysBetween(startDate, endDate));
+		System.out.println(numberOfNonWorkingDaysBetween(startDate, endDate));
+		return (int) (numberOfDaysBetween(startDate, endDate) - numberOfNonWorkingDaysBetween(startDate, endDate));
 	}
 }
 
